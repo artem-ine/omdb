@@ -21,7 +21,7 @@ document
           document.getElementById("movieInfo").innerHTML = "";
 
           // Display each movie result in the movieInfo div
-          data.Search.forEach((movie) => {
+          data.Search.forEach((movie, index) => {
             // Make a new API call using the movie's IMDb ID to get detailed movie information
             fetch(
               `http://www.omdbapi.com/?apikey=e0a3411e&i=${encodeURIComponent(
@@ -32,6 +32,8 @@ document
               .then((detailedData) => {
                 // Handle the response for the detailed movie data
                 const plot = detailedData.Plot;
+                const modalId = `exampleModal-${index}`;
+                const buttonId = `modalButton-${index}`;
 
                 // Generate the modal content for each movie with its plot
                 const movieInfo = `
@@ -44,12 +46,12 @@ document
                         <div class="card-body">
                           <h5 class="card-title">${movie.Title} (${movie.Year})</h5>
                           <!-- Button trigger modal -->
-                          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#${modalId}">
                             En savoir plus
                           </button>
 
                           <!-- Modal -->
-                          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal fade" id="${modalId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                               <div class="modal-content">
                                 <div class="modal-header">
